@@ -5,9 +5,9 @@ from textx.scoping import MetaModelProvider
 from os.path import dirname, abspath, join
 
 grammar_classes = r'''
-Model: 
+Model:
     imports*=Import
-    pkg*=Pkg 
+    pkg*=Pkg
     cls*=Cls;
 
 Pkg: "package" name=ID
@@ -38,12 +38,12 @@ Model:
 
 Obj: "obj" name=ID ":" ref=[Cls|FQN];
 Call: "call"
-        obj=[Obj] 
+        obj=[Obj]
         "."
         method=[Method];
 
 Import: 'import' importURI=STRING;
-Comment: /\/\/.*/;    
+Comment: /\/\/.*/;
 FQN: ID('.'ID)*;
 '''
 
