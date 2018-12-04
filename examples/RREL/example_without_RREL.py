@@ -1,9 +1,10 @@
+from __future__ import unicode_literals
 from textx import metamodel_from_str, get_children_of_type
 import textx.scoping.providers as scoping_providers
 from textx.scoping import MetaModelProvider
 from os.path import dirname, abspath, join
 
-grammar_classes = '''
+grammar_classes = r'''
 Model: 
     imports*=Import
     pkg*=Pkg 
@@ -29,7 +30,7 @@ Comment: /\/\/.*/;
 FQN: ID('.'ID)*;
 '''
 
-grammer_program = '''
+grammer_program = r'''
 Model:
     imports*=Import
     obj*=Obj
@@ -46,6 +47,7 @@ Comment: /\/\/.*/;
 FQN: ID('.'ID)*;
 '''
 
+
 def main(debug=False):
     this_folder = dirname(abspath(__file__))
 
@@ -53,7 +55,7 @@ def main(debug=False):
     mm_classes.register_scope_providers({
         "*.*": scoping_providers.FQNImportURI()
     })
-    MetaModelProvider.add_metamodel("*.def",mm_classes)
+    MetaModelProvider.add_metamodel("*.def", mm_classes)
 
     mm_program_not_supporting_inheritance = metamodel_from_str(
         grammer_program, referenced_metamodels=[mm_classes])
@@ -73,10 +75,11 @@ def main(debug=False):
     })
 
     prg_full = mm_program_supporting_inheritance.model_from_file(
-        join(this_folder, "model", "my_program_full.prg") )
+        join(this_folder, "model", "my_program_full.prg"))
     for call in get_children_of_type("Call", prg_full):
         print("calling {}.{}".format(call.obj.name,
                                      call.method.name))
+
 
 if __name__ == "__main__":
     main()
