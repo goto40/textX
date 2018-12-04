@@ -1,0 +1,28 @@
+package p1 {
+    package p2 {
+        class A {
+            method alevel2
+        }
+        class B {
+            method blevel2
+        }
+        class C {
+            method clevel2
+        }
+    }
+    class A {
+        method alevel1
+    }
+    class B extends p2.B {
+        method blevel1
+    }
+    class C extends p1.p2.C, B {
+        method clevel1
+    }
+}
+class A {
+    method alevel0
+}
+class B extends p1.B {
+    method blevel0
+}
