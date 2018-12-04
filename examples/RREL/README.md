@@ -60,3 +60,40 @@ and
     Comment: /\/\/.*/;    
     FQN: ID('.'ID)*;
 
+## Non-RREL implementation
+
+using built-in scope providers
+
+    mm_program_supporting_inheritance.register_scope_providers({
+        "*.*": scoping_providers.FQNImportURI(),
+        "Call.method": scoping_providers.ExtRelativeName("obj.ref",
+                                                         "methods",
+                                                         "extends")
+    })
+
+
+## RREL implementation
+
+FQN for Classes (one line for each grammar, respectively)
+    
+    Obj.ref: ^pkg*.cls
+    Cls.extends: ^pkg*.cls
+ 
+ and
+
+    Model:
+        imports*=Import
+        obj*=Obj
+        call*=Call;
+    
+    Obj: "obj" name=ID ":" ref=[Cls|FQN];
+    Call: "call"
+            obj=[Obj] 
+            "."
+            method=[Method|ID|~obj.~ref.~methods, ~obj.~ref.~extension*.~methods];
+    
+    Import: 'import' importURI=STRING;
+    Comment: /\/\/.*/;    
+    FQN: ID('.'ID)*;
+
+Open: multifile/importURI support
