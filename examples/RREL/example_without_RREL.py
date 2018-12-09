@@ -28,6 +28,7 @@ Method: "method" name=ID;
 Import: 'import' importURI=STRING;
 Comment: /\/\/.*/;
 FQN: ID('.'ID)*;
+//FQN: ID['.'];
 '''
 
 grammer_program = r'''
@@ -45,6 +46,7 @@ Call: "call"
 Import: 'import' importURI=STRING;
 Comment: /\/\/.*/;
 FQN: ID('.'ID)*;
+//FQN: ID['.'];
 '''
 
 

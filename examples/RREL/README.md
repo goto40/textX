@@ -1,4 +1,4 @@
-# RREL
+## RREL
 
 Here, we present some aspects found in our unittests, which we
 think represent typical scoping use cases.
@@ -6,7 +6,9 @@ think represent typical scoping use cases.
 The example is a self-running demo which "interprets" the DSL:
 modelled DSL-calls to DSL-methods of DSL-objects are printed...
 
-## Use Cases
+### Example-1
+
+#### Use Cases
 
  * **global full qualified name lookup** (`Cls.extends=[Cls|FQN]`)
  * **relative/local lookup** (`Call.method` depends on `Call.obj`).
@@ -17,7 +19,7 @@ modelled DSL-calls to DSL-methods of DSL-objects are printed...
    and the calls of methods. The **model is distributed among 
    multiple model files**.
 
-## Grammars 
+#### Grammars 
 
     Model: 
         imports*=Import
@@ -41,7 +43,7 @@ modelled DSL-calls to DSL-methods of DSL-objects are printed...
     
     Import: 'import' importURI=STRING;
     Comment: /\/\/.*/;
-    FQN: ID('.'ID)*;
+    FQN: ID['.'];
 
 and
 
@@ -58,9 +60,9 @@ and
     
     Import: 'import' importURI=STRING;
     Comment: /\/\/.*/;    
-    FQN: ID('.'ID)*;
+    FQN[noskipws]: parts=ID['.'];
 
-## Non-RREL implementation
+#### Non-RREL implementation
 
 using built-in scope providers
 
@@ -72,7 +74,7 @@ using built-in scope providers
     })
 
 
-## RREL implementation
+#### RREL implementation
 
 FQN for Classes (one line for each grammar, respectively)
     
@@ -94,6 +96,6 @@ FQN for Classes (one line for each grammar, respectively)
     
     Import: 'import' importURI=STRING;
     Comment: /\/\/.*/;    
-    FQN: ID('.'ID)*;
+    FQN[noskipws]: parts=ID['.'];
 
 Open: multifile/importURI support
